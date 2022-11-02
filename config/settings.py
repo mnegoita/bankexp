@@ -178,4 +178,4 @@ LOGIN_URL = '/users/login/'
 # For django-import-export
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
-VERSION = 'v2.2'
+VERSION = 'v2.3'
