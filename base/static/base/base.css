@@ -641,6 +641,18 @@ label.required:after { content: '*';color:red; }
     border-color:  #328fb3;
 }
 
+.btn-clone {
+    color: #fff;
+    background-color: #5b7a5b;
+    border-color:  #5b7a5b;
+}
+
+.btn-clone:hover {
+    color: #fff;
+    background-color: #99cc99;
+    border-color: #99cc99;
+}
+
 .btn-delete {
     color: #fff;
     background-color: #d81a45;
