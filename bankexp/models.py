@@ -121,6 +121,7 @@ class ChequingTransaction(models.Model):
     tr_balance = models.DecimalField(
         max_digits=10, 
         decimal_places=3, 
+        blank = True, null = True,
         verbose_name = "Balance",
         help_text = "Transaction Balance")
     tags = models.ManyToManyField(
@@ -187,6 +188,7 @@ class CreditCardTransaction(models.Model):
     tr_balance = models.DecimalField(
         max_digits=10, 
         decimal_places=3, 
+        blank = True, null = True,
         verbose_name = "Balance",
         help_text = "Transaction Balance")
     tags = models.ManyToManyField(
