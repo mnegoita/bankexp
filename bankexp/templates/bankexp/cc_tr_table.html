@@ -122,7 +122,7 @@
                                             <td>{{ item.tr_date }}</td>
                                             <td>{{ item.tr_debit|placeholder }}</td>
                                             <td>{{ item.tr_credit|placeholder }}</td>
-                                            <td>{{ item.tr_balance }}</td>
+                                            <td>{{ item.tr_balance|placeholder }}</td>
                                             <td>
                                                 {% if item.tags.all %}
                                                     {% for tag in item.tags.all %} 

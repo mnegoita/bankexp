@@ -108,7 +108,7 @@
                                                 <td>{{ transaction.tr_desc }} </td>
                                                 <td>{{ transaction.tr_withdrawal|placeholder }} </td> 
                                                 <td>{{ transaction.tr_deposits|placeholder }} </td> 
-                                                <td>{{ transaction.tr_balance }} </td>
+                                                <td>{{ transaction.tr_balance|placeholder }} </td>
                                                 <td>
                                                     {% if transaction.tags.all %}
                                                         {% for tag in transaction.tags.all %} 
@@ -192,7 +192,7 @@
                                                     <td>{{ transaction.tr_desc }} </td>
                                                     <td>{{ transaction.tr_withdrawal|placeholder }} </td> 
                                                     <td>{{ transaction.tr_deposits|placeholder }} </td> 
-                                                    <td>{{ transaction.tr_balance }} </td>
+                                                    <td>{{ transaction.tr_balance|placeholder }} </td>
                                                     <td>
                                                         {% if transaction.tags.all %}
                                                             {% for tag in transaction.tags.all %} 
@@ -276,7 +276,7 @@
                                                 <td>{{ transaction.tr_desc }} </td>
                                                 <td>{{ transaction.tr_debit|placeholder }} </td> 
                                                 <td>{{ transaction.tr_credit|placeholder }} </td> 
-                                                <td>{{ transaction.tr_balance }} </td>
+                                                <td>{{ transaction.tr_balance|placeholder }} </td>
                                                 <td>
                                                     {% if transaction.tags.all %}
                                                         {% for tag in transaction.tags.all %} 
@@ -361,7 +361,7 @@
                                                     <td>{{ transaction.tr_desc }} </td>
                                                     <td>{{ transaction.tr_debit|placeholder }} </td> 
                                                     <td>{{ transaction.tr_credit|placeholder }} </td> 
-                                                    <td>{{ transaction.tr_balance }} </td>
+                                                    <td>{{ transaction.tr_balance|placeholder }} </td>
                                                     <td>
                                                         {% if transaction.tags.all %}
                                                             {% for tag in transaction.tags.all %} 

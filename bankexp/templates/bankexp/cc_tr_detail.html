@@ -54,7 +54,7 @@
                 <tr><td> Description: </td><td> {{ object.tr_desc }} </td></tr>
                 <tr><td> Debit: </td><td> {{ object.tr_debit|placeholder }} </td></tr>
                 <tr><td> Credit: </td><td> {{ object.tr_credit|placeholder }} </td></tr>
-                <tr><td> Balance: </td><td> {{ object.tr_balance }} </td></tr>
+                <tr><td> Balance: </td><td> {{ object.tr_balance|placeholder }} </td></tr>
                 <tr><td> Tags </td>
                     <td>
                     {% if object.tags.all %}
