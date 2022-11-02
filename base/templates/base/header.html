@@ -1,0 +1,47 @@
+<header id="header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+
+                <div class="logo float-left">
+                    <h1 class="text-light"><a href="{% url 'base:home' %}"><span> BankExp </span></a></h1>
+                </div>
+
+                <nav class="nav-menu d-none d-lg-block">
+                    <ul>
+                        <li class="active"><a href="{% url 'base:home' %}">Home</a></li>              
+                        <li class="drop-down"><a href="">Banking</a>
+                            <ul>
+                            <li><a href="{% url 'bankexp:chequingaccount_list' %}"> Checquing Accounts </a></li>
+                            <li><a href="{% url 'bankexp:creditcardaccount_list' %}">Credit Card Accounts</a></li>
+                            <li><a href="{% url 'bankexp:chequingtransaction_list' %}">Checquing Transactions</a></li>
+                            <li><a href="{% url 'bankexp:creditcardtransaction_list' %}">Credit Card Transactions</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="{% url 'bankexp:tag_list' %}"> Tags </a></li>
+                        <li class="drop-down"><a href="">Expenses</a>
+                            <ul>
+                            <li><a href="{% url 'bankexp:expensetype_list' %}"> Expense Types </a></li>
+                            <li><a href="{% url 'bankexp:expenserecord_list' %}"> Expense Records </a></li>
+                            <li><a href="{% url 'bankexp:location_list' %}">Locations</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <div class="search-form header-search-form">
+                        <form action="{% url 'base:search' %}" method="get" role="search">
+                            <input type="text" name="q" placeholder="Search">
+                            <button type="submit"><i class="icofont-search"></i></button>
+                        </form>
+                    </div>
+                    
+                    <div class="hello-login">
+                        <a href="{% url 'users:logout' %}?next={{ request.path }}"> Log Out </a>
+                    </div>
+                    
+                </nav>
+                
+            </div>
+        </div>
+    </div>
+</header>

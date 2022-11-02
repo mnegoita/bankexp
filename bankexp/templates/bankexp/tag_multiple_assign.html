@@ -1,0 +1,221 @@
+{% extends 'base/base_datatables.html' %}
+{% load custom_filters %}
+
+
+{% block head_title %}
+    Tag Multiple Assign 
+{% endblock %} 
+
+
+
+{% block content %}
+
+<div class="page-header">
+    <div class="row">            
+        <div class="col-8">             
+            <div class="breadcrumbs">
+                <ol>
+                    <li><a href="{% url 'bankexp:tag_list' %}"> Tags </a></li>
+                </ol>
+            </div>        
+        </div>
+        
+        <div class="col-4">           
+            <div class="page-buttons text-right">
+                <a class="btn btn-cancel" href="{% url 'bankexp:tag_list' %}"> <i class="icofont-close"></i> Cancel </a>
+            </div>            
+        </div>
+        
+    </div>        
+</div>
+
+
+{% if chq_tr_tagged or cc_tr_tagged %}
+
+<div class="page-content">
+
+    <div class="page-heading">
+        <div class="row mt-4">    
+            <div class="col">
+                <h1> New <td><a href="{{ tag_choice.get_absolute_url }}"> {{ tag_choice }}</a></td> Tagged Transactions </h1>
+            </div>
+        </div>
+    </div>
+    
+        {% if chq_tr_tagged %}
+        <div class="row mt-4">
+            <div class="col text-center"> 
+                <h2> Chequing Transactions </h2>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col"> 
+                <table class="table table-sm compact bankexpTable">
+                    <thead>
+                        <tr>
+                            <th>Transaction</th>
+                            <th>Account</th>
+                            <th>Date</th>
+                            <th>Withdrawal</th>
+                            <th>Deposits</th>
+                            <th>Balance</th>
+                            <th>Tags</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in chq_tr_tagged %}
+                            <tr>
+                                <td><a href="{{ item.get_absolute_url }}"> {{ item }}</a></td>
+                                <td>{{ item.account }}</td>
+                                <td>{{ item.tr_date }}</td>
+                                <td>{{ item.tr_withdrawal|placeholder }}</td>
+                                <td>{{ item.tr_deposits|placeholder }}</td>
+                                <td>{{ item.tr_balance }}</td>
+                                <td>
+                                {% for tag in item.tags.all %} 
+                                    {{ tag }} {% if not forloop.last %}, {% endif %} 
+                                {% endfor %}
+                                </td>
+                            </tr>                    
+                        {% endfor %}
+                    </tbody>
+                </table>           
+            </div>
+        </div> 
+        {% endif %}
+    
+        {% if cc_tr_tagged %}
+        <div class="row mt-4">
+            <div class="col text-center"> 
+                <h2> Credit Card Transactions </h2>
+            </div>
+        </div>
+
+        <div class="row mt-4 mb-4">
+            <div class="col"> 
+                <table class="table table-sm compact bankexpTable">
+                    <thead>
+                    <tr>
+                        <th>Transaction</th>
+                        <th>Account</th>
+                        <th>Date</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                        <th>Balance</th>
+                        <th>Tags</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for item in cc_tr_tagged %}
+                            <tr>
+                                <td><a href="{{ item.get_absolute_url }}"> {{ item }}</a></td>
+                                <td>{{ item.account }}</td>
+                                <td>{{ item.tr_date }}</td>
+                                <td>{{ item.tr_debit|placeholder }}</td>
+                                <td>{{ item.tr_credit|placeholder }}</td>
+                                <td>{{ item.tr_balance }}</td>
+                                <td>
+                                {% for tag in item.tags.all %} 
+                                    {{ tag }} {% if not forloop.last %}, {% endif %} 
+                                {% endfor %}
+                                </td>
+                            </tr>                
+                        {% endfor %}
+                    </tbody>
+                </table>        
+            </div>
+        </div>
+        {% endif %}
+
+    {% else %}
+
+    <div class="page-heading">
+        <div class="row mt-4">    
+            <div class="col text-center">
+                <h1> Assign a Tag to Multiple Transactions  </h1>
+                <p> Assign a tag to multiple trasanctions by filtering them through an expression 
+                    in their description </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col"> 
+
+            <form action="" method="post" enctype="multipart/form-data"> 
+                {% csrf_token %}
+
+                {% for field in form.hidden_fields %}
+                    {{ field }}
+                {% endfor %}
+                            
+                {% if form.non_field_errors %}
+                <div class="row mt-4">
+                    <div class="col">
+                        <div class="card card-danger">
+                            <div class="card-header"><strong>Errors</strong></div>
+                            <div class="card-body">
+                                {{ form.non_field_errors }}
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+                {% endif %}
+
+
+                <div class="row mt-4">
+                    <div class="col-4 offset-4">
+
+                        <div class="form-row align-items-center mt-2">
+                                       
+                            <div class="col-3">
+                                <label for="{{ form.string_expr.id_for_label }}"> Expression </label> 
+                            </div>
+                            <div class="col">
+                            {% if form.string_expr.errors %}                
+                                {% for error in form.string_expr.errors %}
+                                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                {% endfor %}                
+                            {% endif %}
+                            {{ form.string_expr }} 
+                            </div>        
+                        </div>
+
+                        <div class="form-row align-items-center mt-2">
+                            <div class="col-3">
+                                <label for="{{ form.tag.id_for_label }}" class="col-form-label"> Tag </label>
+                            </div>
+                            <div class="col">
+                            {% if form.tag.errors %}                
+                                {% for error in form.tag.errors %}
+                                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                {% endfor %}                
+                            {% endif %}
+                            {{ form.tag }}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                
+                <div class="row mt-4">
+                    <div class="col-4 offset-4">
+                        <button class="btn btn-save" type="submit"> Assign </button>  
+                    </div>
+                </div> 
+                  
+            </form>
+            
+        </div>
+    </div>
+
+    {% endif %}
+</div>
+
+{% endblock %}
+
+
+

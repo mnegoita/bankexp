@@ -1,0 +1,99 @@
+{% extends 'base/base.html' %}
+{% load custom_filters %}
+{% load buttons %}
+{% load custom_markdown %}
+
+
+{% block head_title %}
+    {{ object }}  
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-8">            
+            <div class="breadcrumbs">
+                <ol>
+                    <li><a href="{% list_view_url object %}"> {{ object|verbose_name_plural }}  </a></li>
+                    <li><a href="#"> {{ object }} </a></li>
+                </ol>
+            </div>            
+        </div>
+        <div class="col-4">           
+            <div class="page-buttons text-right">
+                {% edit_button object %}
+                {% delete_button object %}
+            </div>            
+        </div>
+    </div>        
+</div>
+
+<div class="page-heading">
+    <div class="row mt-4">    
+        <div class="col">
+            <h1> {{ object }} </h1>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="row mt-4">    
+        <div class="col col-md-6 offset-md-3">           
+            <table class="table table-sm card-body">
+                <tr>
+                    <td> Expense Type: </td>
+                    <td>
+                        <a href="{{ object.exp_type.get_absolute_url }}"> {{ object.exp_type }}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td> Date: </td>
+                    <td> {{ object.exp_date }} </td>
+                </tr>
+                <tr>
+                    <td> Amount: </td>
+                    <td> {{ object.amount }} </td>
+                </tr>
+                <tr>
+                    <td> Tax: </td>
+                    <td> {{ object.tax|placeholder }} </td>
+                </tr>
+                <tr>
+                    <td> Location: </td>
+                    <td> {{ object.location|placeholder }} </td>
+                </tr>
+                <tr>
+                    <td> Checquing Tansaction: </td>
+                    <td> <a href="{{ object.chq_tr.get_absolute_url }}"> {{ object.chq_tr|placeholder }}</a> </td>
+                </tr>
+                <tr>
+                    <td> Credit Card Tansaction: </td>
+                    <td> <a href="{{ object.cc_tr.get_absolute_url }}"> {{ object.cc_tr|placeholder }}</a> </td>
+                </tr>
+                <tr>
+                    <td> Quantity: </td>
+                    <td> {{ object.quantity|placeholder }} </td>
+                </tr>
+                <tr>
+                    <td> Files: </td>
+                    <td> {{ object.files|placeholder }} </td>
+                </tr>
+            </table>           
+        </div>
+    </div>
+
+    {% if object.details %}
+    <div class="row mt-4">    
+        <div class="col">
+            <h2> Details </h2>
+            {{ object.details|custom_markdown }}  
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}
+

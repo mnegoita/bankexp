@@ -1,0 +1,80 @@
+{% extends 'base/base_datatables.html' %}
+{% load custom_filters %}
+{% load buttons %}
+
+
+{% block head_title %}
+    {{ model|verbose_name_plural }}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="page-header">
+    <div class="row">            
+        <div class="col">            
+            <div class="page-buttons text-right">
+                {% add_button app_name obj_name %}
+                {% export_button model %}
+            </div>            
+        </div>
+    </div> 
+</section>
+
+<section class="page-heading">
+    <div class="row">    
+        <div class="col">
+            <h1> {{ model|verbose_name_plural }}  </h1>
+        </div>
+    </div>
+</section>
+
+<div class="page-content">
+    <div class="row mt-4">
+        <div class="col"> 
+            {% if queryset %}
+                <div class="transactions-table">
+                    <div class="row mt-4">
+                        <div class="col">           
+                            <table class="table table-sm compact nowrap bankexpTable">
+                                <thead>
+                                    <tr>
+                                        <th>Record</th>
+                                        <th>Expense</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Tax</th>
+                                        <th>Lecation</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in queryset %}
+                                        <tr>
+                                            <td><a href="{{ item.get_absolute_url }}"> {{ item }}</a></td>
+                                            <td>{{ item.exp_type }}</td>
+                                            <td>{{ item.exp_date }}</td>
+                                            <td>{{ item.amount }}</td>
+                                            <td>{{ item.tax|placeholder }}</td>
+                                            <td>{{ item.location|placeholder }}</td>
+                                            <td>{{ item.quantity|placeholder }}</td>
+                                        </tr>                    
+                                    {% endfor %}
+                                </tbody>
+                            </table>                     
+                        </div>
+                    </div> 
+                </div><!--transactions-table-->
+            {% else %}
+                <div class="row mt-4 text-center">
+                    <div class="col">
+                        <p> No {{ model|verbose_name_plural }} found yet. </p>
+                    </div>
+                </div>            
+            {% endif %}
+        </div> 
+    </div>
+</div>
+
+{% endblock %}
+

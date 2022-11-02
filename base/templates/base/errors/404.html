@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+
+
+{% block head_title %}
+    Error 404  
+{% endblock %} 
+
+
+{% block content %}
+
+<section class="page-content">
+    <div class="row pt-4">
+        <div class="col">
+            <h2> Error 404 </h2>
+            <p> Not Found </p>
+            <p> The page you are looking for was not found. </p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+exception: {{ exception }}
+request_path: {{ request_path }}
+
+

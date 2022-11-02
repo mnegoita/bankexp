@@ -1,0 +1,173 @@
+{% extends 'base/base_form.html' %}
+{% load custom_filters %}
+{% load buttons %}
+
+
+{% block content %}
+
+<form action="" method="post" enctype="multipart/form-data">   
+
+    {% csrf_token %}
+    {% for field in form.hidden_fields %}
+        {{ field }}
+    {% endfor %}
+
+    <section class="page-header">
+        <div class="row">
+            <div class="col-8">                
+                <div class="breadcrumbs">
+                    <ol>
+                        <li><a href="/">Home</a></li>
+                        {% if object %}
+                            <li><a href="{% list_view_url object %}"> {{ object|verbose_name_plural }} </a></li>
+                            <li><a href="#"> {{ object }} </a></li>
+                        {% endif %}
+                    </ol>
+                </div>                
+            </div>
+            <div class="col-4">                
+                <div class="page-buttons text-right">
+                    <button class="btn btn-save" type="submit"> <i class="icofont-save"></i> Save </button> 
+                    <a class="btn btn-cancel" href="{% if object.get_absolute_url %}  
+                                                        {{ object.get_absolute_url }} 
+                                                    {% else %}                                                     
+                                                        {{ cancel_button_url }}                                                    
+                                                    {% endif %}"> 
+                    <i class="icofont-close"></i>
+                    Cancel 
+                    </a>
+                </div>                
+            </div>
+        </div>    
+    </section>
+
+    <div class="page-heading">
+        <div class="row">    
+            <div class="col">
+                <h1> 
+                    {% if object.pk %} 
+                        Editing {{ obj_type }} {{ object }} 
+                    {% else %} 
+                        Add a new {{ obj_type|title }} 
+                    {% endif %}
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    {% if form.non_field_errors %}
+    <div class="row mt-4">
+        <div class="col">
+            <div class="card card-danger">
+                <div class="card-header"><strong>Errors</strong></div>
+                <div class="card-body">
+                    {{ form.non_field_errors }}
+                </div>
+            </div>
+        </div>
+    </div>    
+    {% endif %}
+
+    <div class="page-content">
+        <div class="row mt-4">    
+            <div class="col col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-body"> 
+                        <div class="form-group row">
+                            <label for="{{ form.account.id_for_label }}" class="col-sm-4 col-form-label required"> Account </label>  
+                            <div class="col-sm-8">                                      
+                            {% if form.account.errors %}                
+                                {% for error in form.account.errors %}
+                                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                {% endfor %}                
+                            {% endif %}
+                            {{ form.account }}
+                            </div>                                    
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="{{ form.tr_date.id_for_label }}" class="col-sm-4 col-form-label required"> Date </label>  
+                            <div class="col-sm-8">                                        
+                            {% if form.tr_date.errors %}                
+                                {% for error in form.tr_date.errors %}
+                                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                {% endfor %}                
+                            {% endif %}
+                            {{ form.tr_date }} 
+                            </div>                                    
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="{{ form.tr_desc.id_for_label }}" class="col-sm-4 col-form-label required"> Transaction Description </label>
+                            <div class="col-sm-8">
+                            {% if form.tr_desc.errors %}                
+                                {% for error in form.tr_desc.errors %}
+                                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                {% endfor %}                
+                            {% endif %}
+                            {{ form.tr_desc }}
+                            </div> 
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="{{ form.tr_withdrawal.id_for_label }}" class="col-sm-4 col-form-label"> Withdrawal </label>
+                            <div class="col-sm-8">
+                            {% if form.tr_withdrawal.errors %}                
+                                {% for error in form.tr_withdrawal.errors %}
+                                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                {% endfor %}                
+                            {% endif %}
+                            {{ form.tr_withdrawal }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="{{ form.tr_deposits.id_for_label }}" class="col-sm-4 col-form-label"> Deposits </label>
+                            <div class="col-sm-8">
+                            {% if form.tr_deposits.errors %}                
+                                {% for error in form.tr_deposits.errors %}
+                                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                {% endfor %}                
+                            {% endif %}
+                            {{ form.tr_deposits }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="{{ form.tr_balance.id_for_label }}" class="col-sm-4 col-form-label"> Balance </label>
+                            <div class="col-sm-8">
+                            {% if form.tr_balance.errors %}                
+                                {% for error in form.tr_balance.errors %}
+                                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                {% endfor %}                
+                            {% endif %}
+                            {{ form.tr_balance }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="{{ form.tags.id_for_label }}" class="col-sm-4 col-form-label"> Transaction Tags </label>
+                            <div class="col-sm-8">
+                            {% if form.tags.errors %}                
+                                {% for error in form.tags.errors %}
+                                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                {% endfor %}                
+                            {% endif %}
+                            {{ form.tags }}
+                            </div>
+                        </div>
+                    </div>    
+                </div>                                 
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="row mt-4">
+    <div class="col col-md-6 offset-md-3">
+        <p> <span style="color:red"> &#42; </span> Required </p>
+    </div>
+</div>
+
+{% endblock %}
+

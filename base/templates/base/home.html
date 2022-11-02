@@ -1,0 +1,146 @@
+{% extends 'base/base.html' %}
+
+
+{% block head_title %}
+    Home  
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="row">
+    
+    <div class="col-md-4 col-xs-12">
+        <div class="row mt-4 mb-4">
+            <div class="col text-center">
+                <h1> Transactions </h1>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+            <div class="col">
+                <div class="card home-card-accounts">
+                    <div class="card-body">
+                        <a href="{% url 'bankexp:chequingtransaction_list' %}"> Total Chequing Transactions </a>
+                        <val> {{ user_chq_trs_count }} </val>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+            <div class="col">
+                <div class="card home-card-accounts">
+                    <div class="card-body">
+                        <a href="{% url 'bankexp:creditcardtransaction_list' %}"> Total Credit Card Transactions </a>
+                        <val> {{ user_cc_trs_count }} </val>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+            <div class="col">
+                <div class="card home-card-accounts">
+                    <div class="card-body">
+                        <a href="{% url 'bankexp:tag_list' %}"> Tags </a>
+                        <val> {{ user_tags_count }} </val>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-xs-12">
+        <div class="row mt-4 mb-4">
+            <div class="col text-center">
+                <h1> Accounts </h1>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+            <div class="col">
+                <div class="card home-card-accounts">
+                    <div class="card-body">
+                        <div class="d-block">
+                                                    
+                            <a href="{% url 'bankexp:chequingaccount_list' %}"> Chequing Accounts </a> 
+                            <val> {{ user_chq_acc_count }} </val>
+                        </div>
+                        <div class="d-block">
+                            <a href="{% url 'bankexp:creditcardaccount_list' %}"> Credit Card Accounts </a>                      
+                            <val> {{ user_cc_acc_count }} </val>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+            <div class="col">
+                <div class="card home-card-accounts">
+                    <div class="card-body">
+                        <h5 class="card-title"> Chequing Accounts Transactions</h5>
+                        <div class="d-inline-block">
+                            {% for k, v in user_chq_accs_dict.items %}
+                                <a href="{{ k.get_absolute_url }}">{{ k }}</a> <val> {{v}} </val> <br />
+                            {% endfor %}
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+            <div class="col">
+                <div class="card home-card-accounts">
+                    <div class="card-body">
+                        <h5 class="card-title"> Credit Card Accounts Transactions </h5>
+                        <div class="d-inline-block">
+                            {% for k, v in user_cc_accs_dict.items %}
+                                <a href="{{ k.get_absolute_url }}">{{ k }}</a> <val> {{v}} </val> <br />
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 col-xs-12">
+        <div class="row mt-4 mb-4">
+            <div class="col text-center">
+                <h1> Expenses </h1>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+            <div class="col">
+                <div class="card home-card-accounts">
+                    <div class="card-body">
+                        <a href="{% url 'bankexp:expensetype_list' %}"> Expense Types </a>
+                        <val> {{ user_exp_types_count }} </val>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+            <div class="col">
+                <div class="card home-card-accounts">
+                    <div class="card-body">
+                        <a href="{% url 'bankexp:expenserecord_list' %}"> Expense Records </a>
+                        <val> {{ user_exp_recs_count }} </val>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+            <div class="col">
+                <div class="card home-card-accounts">
+                    <div class="card-body">
+                        <a href="{% url 'bankexp:location_list' %}"> Locations </a>
+                        <val> {{ user_locs_count }} </val>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+

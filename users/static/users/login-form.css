@@ -1,0 +1,44 @@
+.card {
+    border-radius: 25px;
+}
+
+.card-title {
+    color: #0073a1;
+}
+
+.form-inputs {
+    position: relative
+}
+
+.form-inputs span {
+    position: absolute;
+    top:-18px;
+    left: 10px;
+    color: #0073a1;
+    background-color: #fff;
+    padding: 5px 10px;
+    font-size: 15px
+}
+
+.form-inputs input {
+    height: 50px;
+    border: 2px solid #eee;
+    
+}
+
+.form-inputs input:focus {
+    box-shadow: none;
+    outline: none;
+    border: 2px solid #005070
+}
+
+.btn {
+    color: #fff;
+    background-color: #005070;
+}
+
+.btn:hover {
+    color: #fff;
+    background-color: #4c9dbd;
+}
+

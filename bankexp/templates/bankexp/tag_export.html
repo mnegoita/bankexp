@@ -1,0 +1,42 @@
+{% extends 'base/base_form.html' %}
+{% load import_export_tags %}
+
+
+{% block head_title %}
+    Tags Export
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-8">                
+            <div class="breadcrumbs">
+                <ol>
+                    <li><a href="{% url 'bankexp:tag_list' %}"> Tags </a></li>
+                </ol>
+            </div>
+        </div>
+    </div>        
+</div>
+
+<div class="page-heading">
+    <div class="row">    
+        <div class="col">
+            <h1> Tags Export </h1>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="row">    
+        <div class="col col-md-4 offset-md-4">
+            {% include 'bankexp/bankexp_export_form.html' %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+

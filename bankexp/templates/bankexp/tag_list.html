@@ -1,0 +1,107 @@
+{% extends 'base/base.html' %}
+{% load custom_filters %}
+{% load buttons %}
+
+
+{% block head_title %}
+    {{ model|verbose_name_plural }}  
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="page-header">
+    <div class="row">
+        <div class="col">            
+            <div class="page-buttons text-right">
+                {% add_button app_name obj_name %}
+                {% tag_multiple_assign_from_here %}
+                {% tag_multiple_remove_from_here %}
+                {% import_button model %}
+                {% export_button model %}                
+            </div>            
+        </div>
+    </div>        
+</div>
+
+<div class="page-heading">
+    <div class="row">    
+        <div class="col">
+            <h1> {{ model|verbose_name_plural }} </h1>
+        </div>
+    </div>
+</div>
+
+<section class="page-content">
+
+    {% if object_list %}
+
+        <section class="item-boxes">
+            <div class="row mt-4 justify-content-center">
+                {% for item in object_list %}
+                    <div class="col-md-6 col-lg-2 d-flex align-items-stretch">
+                        <div class="item-box align-self-start">
+                            <h3 class="title"> <a href="{{ item.get_absolute_url }}"> {{ item }} </a></h3>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="pagination justify-content-center">
+            <div class="row mt-4"> 
+                <div class="col">            
+                    <ul>
+                        {% if page_obj.has_previous %}
+                            <li><a href="?page={{ page_obj.previous_page_number }}"> 
+                                <i class="icofont-rounded-left"></i>
+                            </a></li>
+                        {%  else %}
+                            <li class="disabled">
+                                <i class="icofont-rounded-left"></i>
+                            </li>
+                        {% endif %}
+
+                        {% if page_obj.number|add:'-4' > 1 %}
+                            <li><a href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a></li>
+                        {% endif %}
+
+                        {% for i in page_obj.paginator.page_range %}
+                            {% if page_obj.number == i %}
+                                <li class="active"><a href="#">{{ i }}</a></li>
+                            {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                            <li><a href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+                        {% endif %}
+
+                        {% if page_obj.has_next %}
+                            <li><a href="?page={{ page_obj.next_page_number }}">
+                                <i class="icofont-rounded-right"></i>
+                            </a></li>
+                        {% else %}
+                            <li class="disabled">
+                                <i class="icofont-rounded-right"></i>
+                            </li>
+                        {% endif %}
+                    </ul>            
+                </div>
+            </div>
+        </section>
+
+    {% else %}
+        <div class="row">
+            </div class="col">
+                <p class=" text-center"> 
+                    No {{ model|verbose_name_plural }} added yet.
+                </p>
+            </div>
+        </div>
+    {% endif %}
+    
+</section>
+
+{% endblock %}

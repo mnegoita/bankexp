@@ -1,0 +1,96 @@
+{% extends 'base/base.html' %}
+{% load buttons %}
+{% load custom_filters %}
+
+
+{% block head_title %}
+    {{ object }}  
+{% endblock %} 
+
+{% block content %}
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-8">            
+            <div class="breadcrumbs">
+                <ol>
+                    <li><a href="{% list_view_url object %}"> {{ object|verbose_name_plural }}  </a></li>
+                    <li><a href="#"> {{ object }} </a></li>
+                    </ol>
+            </div>            
+        </div>
+        <div class="col-4">           
+            <div class="page-buttons text-right">
+                {% edit_button object %}
+                {% delete_button object %}
+            </div>            
+        </div>
+    </div>        
+</div>
+
+<div class="page-heading">
+    <div class="row mt-4">    
+        <div class="col">
+            <h1> {{ object }} </h1>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col col-md-6 offset-md-3 text-right"> 
+        {% add_exp_rec_from_cc_tr_button object.id %}
+    </div>
+</div> 
+
+<div class="page-content">
+    <div class="row mt-4">    
+        <div class="col col-md-6 offset-md-3">
+            <table class="table table-sm"> 
+                <tr>
+                    <td> Account: </td>
+                    <td> <a href="{{ object.account.get_absolute_url }}">{{ object.account }} </td>
+                </tr>
+                <tr><td> Date: </td><td> {{ object.tr_date }} </td></tr>
+                <tr><td> Description: </td><td> {{ object.tr_desc }} </td></tr>
+                <tr><td> Debit: </td><td> {{ object.tr_debit|placeholder }} </td></tr>
+                <tr><td> Credit: </td><td> {{ object.tr_credit|placeholder }} </td></tr>
+                <tr><td> Balance: </td><td> {{ object.tr_balance }} </td></tr>
+                <tr><td> Tags </td>
+                    <td>
+                    {% if object.tags.all %}
+                        {% for tag in object.tags.all %} 
+                            <a href="{{ tag.get_absolute_url }}"> {{ tag }}</a>{% if not forloop.last %}, {% endif %} 
+                        {% endfor %}
+                    {% else %}
+                        <span class="text-muted">&mdash;</span>
+                    {% endif %} 
+                    </td>
+                </tr>
+                <tr><td>Expense Records</td>
+                    <td>
+                        {% if expense_records %}
+                            {% for tr in expense_records %} 
+                                <a href="{{ tr.get_absolute_url }}"> {{ tr }}</a>{% if not forloop.last %}, {% endif %} 
+                            {% endfor %}
+                        {% else %}
+                            <span class="text-muted">&mdash;</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>           
+        </div>
+    </div>
+
+    <div class="row mt-4">    
+        <div class="col col-md-6 offset-md-3">
+            <h4> Note </h4>
+            <p>
+                An expense record for this specific transaction can be added by clicking the Add An Expense Record. <br />
+                One or more expense records can be related to one transaction. This would show what was this transaction used for.
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

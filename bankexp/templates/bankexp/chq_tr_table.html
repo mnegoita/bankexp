@@ -1,0 +1,222 @@
+{% extends 'base/base_datatables.html' %}
+{% load custom_filters %}
+{% load buttons %}
+
+
+{% block head_title %}
+    {{ model|verbose_name_plural }}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="page-header">
+    <div class="row">            
+        <div class="col">            
+            <div class="page-buttons text-right">
+                {% add_button app_name obj_name %}
+                {% import_button model %}
+                {% export_button model %}
+            </div>            
+        </div>
+    </div> 
+</section>
+
+<section class="page-heading">
+    <div class="row">    
+        <div class="col">
+            <h1> {{ model|verbose_name_plural }} </h1>
+        </div>
+    </div>
+</section>
+
+
+<div class="page-content">
+    <div class="row">
+        <div class="col"> 
+
+            {% if queryset %}
+                <div class="row">
+                    <div class="col text-center"> 
+                        <h3> Transactions </h3>
+                        <h5> From {{date_from}} to {{date_to}} </h5>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col col-sm-12 col-md-6 offset-md-3">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                
+                            {% for field in form.hidden_fields %}
+                                {{ field }}
+                            {% endfor %}
+                
+                            {% if form.non_field_errors %}
+                            <div class="row mt-4 mb-4">
+                                <div class="col">
+                                    <div class="card text-white bg-danger">
+                                        <div class="card-header"><strong>Errors</strong></div>
+                                        <div class="card-body">
+                                            {{ form.non_field_errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>    
+                            {% endif %}
+                
+                            <div class="form-row">
+                                <div class="col-2">
+                                    <label for="{{ form.date_from.id_for_label }}" class="col-form-label required"> Date From: </label>
+                                </div>
+                                <div class="col">
+                                    {% if form.date_from.errors %}                
+                                        {% for error in form.date_from.errors %}
+                                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                        {% endfor %}                
+                                    {% endif %}
+                                    {{ form.date_from }}
+                                </div>
+                
+                                <div class="col-2">
+                                    <label for="{{ form.date_to.id_for_label }}" class="col-form-label required"> Date To: </label>
+                                </div>
+                                <div class="col">
+                                    {% if form.date_to.errors %}                
+                                        {% for error in form.date_to.errors %}
+                                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                        {% endfor %}                
+                                    {% endif %}
+                                    {{ form.date_to }}
+                                </div>
+                
+                                <div class="col">
+                                    <button type="submit" class="btn btn-filter">Filter</button> 
+                                </div>
+                
+                            </div>
+                
+                        </form>
+                    </div>
+                </div>
+    
+                <div class="transactions-table">
+                    <div class="row mt-4 mb-2">
+                        <div class="col">           
+                            <table class="table table-sm display compact bankexpTable">
+                                <thead>
+                                    <tr>
+                                        <th>Transaction</th>
+                                        <th>Account</th>
+                                        <th>Date</th>
+                                        <th>Withdrawal</th>
+                                        <th>Deposits</th>
+                                        <th>Balance</th>
+                                        <th>Tags</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in queryset %}
+                                        <tr>
+                                            <td><a href="{{ item.get_absolute_url }}"> {{ item }}</a></td>
+                                            <td>{{ item.account }}</td>
+                                            <td>{{ item.tr_date }}</td>
+                                            <td>{{ item.tr_withdrawal|placeholder }}</td>
+                                            <td>{{ item.tr_deposits|placeholder }}</td>
+                                            <td>{{ item.tr_balance }}</td>
+                                            <td>
+                                                {% if item.tags.all %}
+                                                    {% for tag in item.tags.all %} 
+                                                        <a href="{{ tag.get_absolute_url }}"> {{ tag }} </a>{% if not forloop.last %}, {% endif %}                                        
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <span class="text-muted">&mdash;</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>                    
+                                    {% endfor %}
+                                </tbody>
+                            </table>                     
+                        </div>
+                    </div>
+                </div><!--transactions-table--> 
+
+            {% else %}
+
+                <div class="row">
+                    <div class="col col-sm-12 col-md-6 offset-md-3">
+                        <p>
+                            By default this view displays the transactions occured in the last six months.
+                            To display transactions older than six months use the date range form with a Date From older than six months.
+                        </p>
+                    </div>
+                </div>
+            
+                <div class="row mt-4">
+                    <div class="col col-sm-12 col-md-6 offset-md-3">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                
+                            {% for field in form.hidden_fields %}
+                                {{ field }}
+                            {% endfor %}
+                
+                            {% if form.non_field_errors %}
+                            <div class="row mt-4 mb-4">
+                                <div class="col">
+                                    <div class="card text-white bg-danger">
+                                        <div class="card-header"><strong>Errors</strong></div>
+                                        <div class="card-body">
+                                            {{ form.non_field_errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>    
+                            {% endif %}
+                
+                            <div class="form-row">
+                                <div class="col-2">
+                                    <label for="{{ form.date_from.id_for_label }}" class="col-form-label required"> Date From: </label>
+                                </div>
+                                <div class="col">
+                                    {% if form.date_from.errors %}                
+                                        {% for error in form.date_from.errors %}
+                                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                        {% endfor %}                
+                                    {% endif %}
+                                    {{ form.date_from }}
+                                </div>
+                
+                                <div class="col-2">
+                                    <label for="{{ form.date_to.id_for_label }}" class="col-form-label required"> Date To: </label>
+                                </div>
+                                <div class="col">
+                                    {% if form.date_to.errors %}                
+                                        {% for error in form.date_to.errors %}
+                                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                        {% endfor %}                
+                                    {% endif %}
+                                    {{ form.date_to }}
+                                </div>
+                
+                                <div class="col">
+                                    <button type="submit" class="btn btn-filter">Filter</button> 
+                                </div>
+                
+                            </div>
+                
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col text-center">
+                       <p> No {{ model|verbose_name_plural }} to be displayed yet. </p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

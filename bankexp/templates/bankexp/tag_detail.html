@@ -1,0 +1,398 @@
+{% extends 'base/base_datatables.html' %}
+{% load custom_filters %}
+{% load buttons %}
+{% load custom_markdown %}
+{% load static %}
+
+
+{% block head_title %}
+    {{ object }}  
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-8">
+            <div class="breadcrumbs">
+                <ol>
+                    <li><a href="{% list_view_url object %}"> {{ object|verbose_name_plural }}  </a></li>
+                    <li><a href="#"> {{ object }} </a></li>
+                </ol>
+            </div>            
+        </div>
+        <div class="col-4">           
+            <div class="page-buttons text-right">
+                {% edit_button object %}
+                {% delete_button object %}
+            </div>            
+        </div>
+    </div>        
+</div>
+
+<div class="page-heading">
+    <div class="row">    
+        <div class="col">
+            <h1> {{ object }} </h1>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    
+    <div class="row">    
+        <div class="col"> 
+
+            <!--chequing transactions-->            
+
+            <!--withdrawal (chequing transactions)-->
+            {% if chq_tr_withdrawal > 0 %}
+                <div class="row mt-4">    
+                    <div class="col text-center"> 
+                        <h3> Withdrawal </h3>
+                        <em> Chequing transactions </em>
+                    </div>
+                </div>
+
+                <!--totals row-->
+                <div class="row mt-4">
+                    <div class="col col-md-4 offset-md-4">                        
+                        <div class="card home-card-accounts">
+                            <div class="card-body">
+                                Total amount for all transactions <br />
+                                {{chq_tr_withdrawal}}
+                                
+                                <h4> Per year totals </h4>
+                                {% for item in chq_trs_years_totals_withdrawals %}
+                                    {% for k, v in item.items %}
+                                        {{k}} - {{v}} <br />
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>                            
+                    </div>
+                </div>
+
+                <div class="row mt-4">    
+                    <div class="col text-center"> 
+                        <h4> Withdrawal - Per year transactions </h4>
+                    </div>
+                </div>
+                <!--table row-->
+                <div class="row">
+                    <div class="col">
+                        {% for item in chq_trs_years_transactions_withdrawals %}
+                            {% for k, v in item.items %}
+                                <h4 class="text-center"> {{k}} </h4>
+                                
+                                <table class="table table-sm compact nowrap bankexpTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Transaction</th>
+                                            <th>Account</th>
+                                            <th>Date</th>
+                                            <th>Desc</th>
+                                            <th>Withdrawal</th>
+                                            <th>Deposits</th>
+                                            <th>Balance</th>
+                                            <th>Tags</h>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for transaction in v %}                     
+                                            <tr>
+                                                <td><a href="{{ transaction.get_absolute_url }}" >{{ transaction }}</a></td>
+                                                <td>{{ transaction.account }} </td>
+                                                <td>{{ transaction.tr_date }} </td>
+                                                <td>{{ transaction.tr_desc }} </td>
+                                                <td>{{ transaction.tr_withdrawal|placeholder }} </td> 
+                                                <td>{{ transaction.tr_deposits|placeholder }} </td> 
+                                                <td>{{ transaction.tr_balance }} </td>
+                                                <td>
+                                                    {% if transaction.tags.all %}
+                                                        {% for tag in transaction.tags.all %} 
+                                                            {{ tag }}{% if not forloop.last %}, {% endif %} 
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <span class="text-muted">&mdash;</span>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>                
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <!--deposit (chequing transactions)-->
+            {% if chq_tr_deposits > 0 %}
+                <div class="row mt-4">    
+                    <div class="col text-center">     
+                        <h3> Deposit </h3>
+                        <em> Chequing transactions </em>
+                    </div>
+                </div>
+                <!--totals row-->
+                <div class="row mt-4">
+                    <div class="col col-md-4 offset-md-4">                        
+                        <div class="card home-card-accounts">
+                            <div class="card-body">
+                                Total amount for all transactions <br />
+                                {{chq_tr_deposits}}
+                                
+                                <h4> Per year totals </h4>
+                                {% for item in chq_trs_years_totals_deposits %}
+                                    {% for k, v in item.items %}
+                                        {% if v > 0 %}
+                                            {{k}} - {{v}} <br />
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>                           
+                    </div>
+                </div>
+
+                <div class="row mt-4">    
+                    <div class="col text-center"> 
+                        <h4> Deposit - Per year transactions </h4>
+                    </div>
+                </div>
+                <!--table row-->
+                <div class="row">
+                    <div class="col">
+                        {% for item in chq_trs_years_transactions_deposits %}
+                            {% for k, v in item.items %}
+                                {% if v %}
+                                    <h4 class="text-center"> {{k}} </h4>
+                                    
+                                    <table class="table table-sm compact nowrap bankexpTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Transaction</th>
+                                                <th>Account</th>
+                                                <th>Date</th>
+                                                <th>Desc</th>
+                                                <th>Withdrawal</th>
+                                                <th>Deposits</th>
+                                                <th>Balance</th>
+                                                <th>Tags</h>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for transaction in v %}                                             
+                                                <tr>
+                                                    <td><a href="{{ transaction.get_absolute_url }}" >{{ transaction }}</a></td>
+                                                    <td>{{ transaction.account }} </td>
+                                                    <td>{{ transaction.tr_date }} </td>
+                                                    <td>{{ transaction.tr_desc }} </td>
+                                                    <td>{{ transaction.tr_withdrawal|placeholder }} </td> 
+                                                    <td>{{ transaction.tr_deposits|placeholder }} </td> 
+                                                    <td>{{ transaction.tr_balance }} </td>
+                                                    <td>
+                                                        {% if transaction.tags.all %}
+                                                            {% for tag in transaction.tags.all %} 
+                                                                {{ tag }}{% if not forloop.last %}, {% endif %} 
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            <span class="text-muted">&mdash;</span>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <!--credit card transactions-->
+            
+            <!--debit (credit card transactions)-->
+            {% if cc_tr_debit > 0 %}
+                <div class="row mt-4">    
+                    <div class="col text-center"> 
+                        <h3> Debit </h3>
+                        <em> Credit card transactions </em>
+                    </div>
+                </div>
+                <!-- totals row-->
+                <div class="row mt-4">
+                    <div class="col col-md-4 offset-md-4">                       
+                        <div class="card home-card-accounts">
+                            <div class="card-body">
+                                Total amount for all transactions <br />
+                                {{cc_tr_debit}}
+                                
+                                <h4> Per year totals </h4>
+                                {% for item in cc_trs_years_totals_debits %}
+                                    {% for k, v in item.items %}
+                                        {{k}} - {{v}} <br />
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>                            
+                    </div>
+                </div>
+            
+                <div class="row mt-4">    
+                    <div class="col text-center"> 
+                        <h4> Debit - Per year transactions </h4>
+                    </div>
+                </div>
+                <!--table row-->
+                <div class="row">    
+                    <div class="col"> 
+                        {% for item in cc_trs_years_transactions_debits %}
+                            {% for k, v in item.items %}                                    
+                                <h4 class="text-center"> {{k}} </h4>                       
+
+                                <table class="table table-sm compact nowrap bankexpTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Transaction</th>
+                                            <th>Account</th>
+                                            <th>Date</th>
+                                            <th>Desc</th>
+                                            <th>Debit</th>
+                                            <th>Credit</th>
+                                            <th>Balance</th>
+                                            <th>Tags</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for transaction in v %}                                                
+                                            <tr>
+                                                <td><a href="{{ transaction.get_absolute_url }}" >{{ transaction }}</a></td>
+                                                <td>{{ transaction.account }} </td>
+                                                <td>{{ transaction.tr_date }} </td>
+                                                <td>{{ transaction.tr_desc }} </td>
+                                                <td>{{ transaction.tr_debit|placeholder }} </td> 
+                                                <td>{{ transaction.tr_credit|placeholder }} </td> 
+                                                <td>{{ transaction.tr_balance }} </td>
+                                                <td>
+                                                    {% if transaction.tags.all %}
+                                                        {% for tag in transaction.tags.all %} 
+                                                            {{ tag }}{% if not forloop.last %}, {% endif %}
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <span class="text-muted">&mdash;</span>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                    
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            
+            <!--credit (credit card transactions)-->
+            {% if cc_tr_credit > 0 %}
+                <div class="row mt-4">    
+                    <div class="col text-center"> 
+                        <h3> Credit </h3>
+                        <em> Credit card transactions </em>
+                    </div>
+                </div>
+                <!-- totals row-->
+                <div class="row mt-4">
+                    <div class="col col-md-4 offset-md-4">                         
+                        <div class="card home-card-accounts">
+                            <div class="card-body">
+                                Total amount for all transactions <br />
+                                {{cc_tr_credit}}
+                                
+                                <h4> Per year totals </h4>
+                                {% for item in cc_trs_years_totals_credits %}
+                                    {% for k, v in item.items %}
+                                        {% if v > 0 %}
+                                            {{k}} - {{v}} <br />
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>                               
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">    
+                    <div class="col text-center"> 
+                        <h4> Credit - Per year transactions </h4>
+                    </div>
+                </div>
+                <!--table row-->
+                <div class="row">    
+                    <div class="col"> 
+                        {% for item in cc_trs_years_transactions_credits %}
+                            {% for k, v in item.items %}
+                                {% if v %}
+                                    <h4 class="text-center"> {{k}} </h4>                                       
+
+                                    <table class="table table-sm compact nowrap bankexpTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Transaction</th>
+                                                <th>Account</th>
+                                                <th>Date</th>
+                                                <th>Desc</th>
+                                                <th>Debit</th>
+                                                <th>Credit</th>
+                                                <th>Balance</th>
+                                                <th>Tags</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for transaction in v %} 
+                                                <tr>
+                                                    <td><a href="{{ transaction.get_absolute_url }}" >{{ transaction }}</a></td>
+                                                    <td>{{ transaction.account }} </td>
+                                                    <td>{{ transaction.tr_date }} </td>
+                                                    <td>{{ transaction.tr_desc }} </td>
+                                                    <td>{{ transaction.tr_debit|placeholder }} </td> 
+                                                    <td>{{ transaction.tr_credit|placeholder }} </td> 
+                                                    <td>{{ transaction.tr_balance }} </td>
+                                                    <td>
+                                                        {% if transaction.tags.all %}
+                                                            {% for tag in transaction.tags.all %} 
+                                                                {{ tag }}{% if not forloop.last %}, {% endif %}
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            <span class="text-muted">&mdash;</span>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if object.notes %}
+    <div class="row mt-4">    
+        <div class="col">
+            <h2> Notes </h2>
+            {{ object.notes|custom_markdown }}  
+        </div>
+    </div>
+    {% endif %}
+    
+</div>
+
+{% endblock %}

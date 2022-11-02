@@ -1,0 +1,42 @@
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="row mt-4">
+            <div class="col">
+                <div class="card card-danger">
+                    <div class="card-header"><strong>Errors</strong></div>
+                    <div class="card-body">
+                        {{ form.non_field_errors }}
+                    </div>
+                </div>
+            </div>
+        </div>    
+        {% endif %}
+
+        <div class="row mt-4">
+            <div class="col">
+                Choose the file format to be exported
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="{{ form.file_format.id_for_label }}" class="col-sm-3 col-form-label"> File format </label> 
+            <div class="col-sm-9">  
+                {% if form.file_format.errors %}                
+                    {% for error in form.file_format.errors %}
+                        <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                    {% endfor %}                
+                {% endif %}
+                {{ form.file_format }}
+            </div>                        
+        </div>
+
+        <div>
+            <button class="btn btn-save" type="submit"> <i class="icofont-check"></i> Export </button>
+        </div>
+    </form>
+            
+        
+
+

@@ -1,0 +1,194 @@
+{% extends 'base/base.html' %}
+
+
+{% block head_title %}
+    Credit Card Accounts Import  
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-8">            
+            <div class="breadcrumbs">
+                <ol>
+                    <li><a href="{% url 'bankexp:creditcardaccount_list' %}"> Credit Card Accounts </a></li>
+                </ol>
+            </div>           
+        </div>
+    </div>        
+</div>
+
+<div class="page-heading">
+    <div class="row">    
+        <div class="col">
+            <h1> Credit Card Accounts Import  </h1>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="row">    
+        <div class="col col-md-6 offset-md-3">
+            {% if confirm_form %}
+
+                <form enctype="multipart/form-data" method="post" action="{% url 'bankexp:creditcardaccount_import_confirm' %}">
+                    {% csrf_token %}
+
+                    {{ confirm_form.as_p }}
+
+                    <div class="row mt-4 mb-4">
+                        <div class="col">
+                            Below is a preview of data to be imported. If you are satisfied with the results, click Confirm import
+                        </div>
+                    </div>
+
+                    <div class="row mt-4 mb-4">
+                        <div class="col">
+                            <button class="btn btn-save" type="submit"> <i class="icofont-check"></i> Confirm import </button>                         
+                            <a class="btn btn-cancel" href="{% url 'bankexp:creditcardtransaction_list' %}"> 
+                                <i class="icofont-close"></i>
+                                Cancel 
+                            </a>
+                        </div>
+                    </div>
+                </form>
+
+            {% else %}
+
+                <form enctype="multipart/form-data" method="post" action="{% url 'bankexp:creditcardaccount_import' %}">
+                {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                    <div class="row mt-4">
+                        <div class="col">
+                            <div class="card card-danger">
+                                <div class="card-header"><strong>Errors</strong></div>
+                                <div class="card-body">
+                                    {{ form.non_field_errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                    {% endif %}
+            
+                    <div class="row mt-4">
+                        <div class="col">
+                            The csv file must have the following headers: <br /> 
+                            {% for f in fields  %}
+                                {% if forloop.counter0 %},{% endif %}
+                                <code>{{f}}</code>
+                            {% endfor %}
+                            <br /><br />
+                            The headers should exists even if the columns are empty.
+                            Otherwise the import will fail.
+                        </div>
+                    </div>
+
+                    <div class="form-group row mt-4">
+                        <label for="{{ form.import_file.id_for_label }}" class="col-sm-2 col-form-label"> File to import </label> 
+                        <div class="col-sm-10">                                
+                            {% if form.import_file.errors %}                
+                                {% for error in form.import_file.errors %}
+                                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                {% endfor %}                
+                            {% endif %}
+                            {{ form.import_file }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="{{ form.input_format.id_for_label }}" class="col-sm-2 col-form-label"> File format </label> 
+                        <div class="col-sm-10">  
+                            {% if form.input_format.errors %}                
+                                {% for error in form.input_format.errors %}
+                                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                {% endfor %}                
+                            {% endif %}
+                            {{ form.input_format }}
+                        </div>                        
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col">                           
+                            <input type="submit" class="btn btn-save" value="Submit">                           
+                        </div>
+                    </div>
+                </form>
+
+            {% endif %}
+
+            {% if result %}
+
+                {% if result.has_errors %}
+                    <h2> Errors </h2>
+                    <ul>
+                        {% for error in result.base_errors  %}
+                        <li>
+                            {{ error.error }}
+                            <div class="traceback">{{ error.traceback|linebreaks }}</div>
+                        </li>
+                        {% endfor %}
+                        {% for line, errors in result.row_errors %}
+                            {% for error in errors %}
+                            <li>
+                                Line number: {{ line }} - {{ error.error }}
+                                <div>{{ error.row }}</div>
+                                <div class="traceback">{{ error.traceback|linebreaks }}</div>
+                            </li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+
+                {% else %}
+
+                    <h2>
+                        Preview
+                    </h2>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th> Status </th>
+                                {% for field in result.diff_headers %}
+                                <th>{{ field|title }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in result.rows %}
+                            <tr>
+                                <td>
+                                    {% if row.import_type == 'new' %}
+                                    New
+                                    {% elif row.import_type == 'skip' %}
+                                    Skipped
+                                    {% elif row.import_type == 'delete' %}
+                                    Delete
+                                    {% elif row.import_type == 'update' %}
+                                    Update
+                                    {% endif %}
+                                </td>
+                                {% for field in row.diff %}
+                                <td>
+                                    {{ field }}
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+

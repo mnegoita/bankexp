@@ -1,0 +1,94 @@
+{% extends 'base/base.html' %}
+{% load custom_filters %}
+{% load buttons %}
+   
+
+{% block head_title %}
+    Delete {{ object }}?
+{% endblock %}
+
+
+{% block content %} 
+
+<form action="" method="post" class="form"> 
+
+    {% csrf_token %}
+    {% for field in form.hidden_fields %}
+        {{ field }}
+    {% endfor %}
+
+    <section class="page-header">
+        <div class="row">
+            <div class="col-8">                
+                <div class="breadcrumbs">
+                    <ol>
+                        <li><a href="{% list_view_url object %}"> {{ object|verbose_name_plural }} </a></li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-4">                
+                <div class="page-buttons text-right">
+                    <a href="{{ object.get_absolute_url }}" class="btn btn-cancel"> 
+                        <i class="icofont-close"></i> Cancel </a>
+                    <button class="btn btn-delete"> Confirm </button>
+                </div>                
+            </div>
+        </div>        
+    </section>
+
+    <section class="page-heading">
+        <div class="row">    
+            <div class="col">
+                <h1> Delete {{ object }}? </h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-content">
+
+        {% if error %}
+            <div class="row mt-4">
+                <div class="col-6 offset-3">
+                    <div class="card mb-4">
+                        <div class="card-header delete-question">
+                            Error deleting {{object}} 
+                        </div>
+                        <div class="card-body">
+                            <p> {{error|safe}} </p>
+                            <p> Try delete the dependencies first, then delete <strong> {{object}}. </strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        {% else %}
+            <div class="row mt-4">                                    
+                <div class="col-6 offset-3">
+                    <div class="card mb-4">
+                        <div class="card-header delete-question">
+                            Do you want to delete {{object}} ? 
+                        </div>
+                        <div class="card-body">
+                            <p> Are you sure ?</p>
+                            {% if exp_recs_count %}
+                                <p> 
+                                    <strong> 
+                                        There are {{ exp_recs_count }} Expense Records as dependencies of this {{obj_type}}!
+                                    </strong>
+                                </p> 
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>        
+        {% endif %}
+            
+    </section>
+
+</form>
+
+{% endblock %}
+ 
+ 
+ 
+
+

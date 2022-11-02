@@ -1,0 +1,174 @@
+{% extends 'base/base.html' %}
+{% load render_table from django_tables2 %}
+
+
+{% block head_title %}
+    Search
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-content">
+    
+    {% if request.GET.q %}
+        <!--query-->
+        <div class="search-page">
+            <div class="row">
+            
+                {% if results %}
+                    <!--results-->
+                    <div class="col-md-9">
+
+                        <!--search form-->
+                        <div class="row" style="padding-bottom: 20px">
+                            <div class="col-md-12 d-flex justify-content-center">
+                                <form action="{% url 'base:search' %}" method="get" class="form-inline">
+                                    <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search" id="id_q" class="form-control" style="width: 350px" />
+                                    {{ search_form.obj_type }}
+                                    <button type="submit" class="btn">Search</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                            {% for obj_type in results %}
+                                                                
+                                <h3 id="{{ obj_type.name|lower }}">{{ obj_type.name }}</h3>
+
+                                {% render_table obj_type.table 'base/search/table_search_view.html' %}
+                                
+                                <a href="{{ obj_type.url }}" class="btn refine-search float-right">
+                                    <span class="icofont-arrow-right" aria-hidden="true"></span>
+                                    {% if obj_type.table.page.has_next %}
+                                        See all {{ obj_type.table.page.paginator.count }} results
+                                    {% else %}
+                                        Refine search
+                                    {% endif %}
+                                </a>
+
+                                <div class="clearfix"></div>
+                            {% endfor %}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--sidebar-->
+                    <div class="col-md-3">
+                        <div class="sidebar">
+                            <h3 class="sidebar-title"> Search Results </h3>
+                            {% for obj_type in results %}
+                            <div class="sidebar-item">
+                                <ul>                                    
+                                    <li>
+                                        <a href="#{{ obj_type.name|lower }}" class="list-group-item">
+                                            {{ obj_type.name }}
+                                            <span>{{ obj_type.table.page.paginator.count }}</span>
+                                        </a>
+                                    </li>                                    
+                                </ul>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div> 
+
+                {% else %}
+                
+                    <!--no results-->
+                    <div class="col">
+                        <!--search form-->
+                        <div class="row mt-4">
+                            <div class="col d-flex justify-content-center">
+                                <form action="{% url 'base:search' %}" method="get" class="form-inline">
+                                    <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search" id="id_q" class="form-control" style="width: 350px" />
+                                    {{ search_form.obj_type }}
+                                    <button type="submit" class="btn">Search</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col d-flex justify-content-center">
+                                <h4 class="text-muted">No results found</h> 
+                            </div>
+                        </div>
+                    </div>
+                   
+                {% endif %}
+            </div>
+        </div>
+
+    {% else %}
+
+        <!--no query-->
+        <div class="search-page">
+            <div class="row">
+                <div class="col-md-4 offset-md-4 mt-5">
+                
+                    <div class="search-no-query">
+
+                        <form action="{% url 'base:search' %}" method="get" class="form form-horizontal">
+                            <div class="card">
+
+                                <div class="card-header">
+                                    <strong>Search</strong>
+                                </div>
+
+                                <div class="card-body">
+                                    {% for field in form.hidden_fields %}
+                                        {{ field }}
+                                    {% endfor %}
+
+                                    <div class="form-row align-items-center">
+                                        <div class="col-2">
+                                            <label for="{{ form.q.id_for_label }}" class="col-form-label"> Search </label>
+                                        </div>
+                                        <div class="col">
+                                            {% if form.q.errors %}                
+                                                {% for error in form.q.errors %}
+                                                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                                {% endfor %}                
+                                            {% endif %}
+                                            {{ form.q }}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row mt-2 align-items-center">
+                                        <div class="col-2">
+                                            <label for="{{ form.obj_type.id_for_label }}" class="col-form-label"> Type </label>
+                                        </div>
+                                        <div class="col">
+                                            {% if form.obj_type.errors %}                
+                                                {% for error in form.obj_type.errors %}
+                                                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                                {% endfor %}                
+                                            {% endif %}
+                                            {{ form.obj_type }}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="card-footer text-right">
+                                    <button type="submit" class="btn"><i class="icofont-search"></i>Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
+
+
+
+

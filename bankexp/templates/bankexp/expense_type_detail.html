@@ -1,0 +1,144 @@
+{% extends 'base/base_datatables.html' %}
+{% load custom_filters %}
+{% load buttons %}
+{% load custom_markdown %}
+
+
+{% block head_title %}
+    {{ object }}  
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-8">
+            
+            <div class="breadcrumbs">
+                <ol>
+                    <li><a href="{% list_view_url object %}"> {{ object|verbose_name_plural }}  </a></li>
+                    <li><a href="#"> {{ object }} </a></li>
+                </ol>
+            </div>
+            
+        </div>
+        <div class="col-4">           
+            <div class="page-buttons text-right">
+                {% edit_button object %}
+                {% delete_button object %}
+            </div>            
+        </div>
+    </div>        
+</div>
+
+<div class="page-heading">
+    <div class="row">    
+        <div class="col">
+            <h1> {{ object }} </h1>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="row">    
+        <div class="col">
+
+            {% if exp_recs %} 
+
+                <div class="row">
+                    <div class="col text-center"> 
+                        <h2> Expense Records </h2>
+                        <em> for this type </em>
+                    </div>
+                </div>
+                
+                <!--totals row-->
+                <div class="row mt-4">
+                    <div class="col col-md-4 offset-md-4">                        
+                        <div class="card home-card-accounts">
+                            <div class="card-body">
+                                Total amount from all expense records <br />
+                                {{exp_rec_amnt}}
+                                
+                                <h4> Per year totals </h4>
+                                {% for item in exp_recs_years_totals %}
+                                    {% for k, v in item.items %}
+                                    {{k}} - {{v}} <br />
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>                            
+                    </div>
+                </div>
+
+                <!--row with expense records per year-->                
+                <div class="row mt-4">    
+                    <div class="col text-center"> 
+                        <h3> Expense Records per year</h3>
+                    </div>
+                </div>
+
+                {% for item in exp_recs_years_records %}
+                    {% for k, v in item.items %}
+
+                    <div class="row mt-4 mb-4">
+                        <div class="col">  
+                            <h4 class="text-center"> {{k}} </h4>        
+                            <table class="table table-sm compact nowrap bankexpTable">
+                                <thead>
+                                    <tr>
+                                        <th>Record</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Tax</th>
+                                        <th>Quantity</th>
+                                        <th>Location</th>
+                                    </tr>
+                                </thead>
+                
+                                <tbody>
+                                    {% for record in v %} 
+                                        <tr>
+                                            <td><a href="{{ record.get_absolute_url }}"> {{ record }}</a></td>
+                                            <td>{{ record.exp_date }}</td>
+                                            <td>{{ record.amount }}</td>
+                                            <td>{{ record.tax|placeholder }}</td>
+                                            <td>{{ record.quantity|placeholder }}</td>
+                                            <td>{{ record.location|placeholder }}</td>
+                                        </tr>                        
+                                    {% endfor %}
+                                </tbody>
+                            </table>                    
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                {% endfor %}
+
+            {% else %}
+
+            <div class="row">
+                <div class="col text-center"> 
+                    <p> No expense records to display yet for this expense type. </p>
+                </div>
+            </div>
+
+            {% endif %}
+            
+        </div>
+    </div>
+
+    {% if object.notes %}
+    <div class="row mt-4">    
+        <div class="col">
+            <h2> Notes </h2>
+            {{ object.notes|custom_markdown }}  
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}
+
