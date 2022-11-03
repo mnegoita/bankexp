@@ -77,13 +77,12 @@
                     <div class="row mt-4">
                         <div class="col">
                             The csv file must have the following headers: <br /> 
-                            {% for f in fields  %}
-                                {% if forloop.counter0 %},{% endif %}
-                                <code>{{f}}</code>
-                            {% endfor %}
+                            {% for f in fields %}<code>{% if forloop.counter0 %},{% endif %}{{f}}</code>{% endfor %}
                             <br /><br />
-                            The headers should exists even if the columns are empty.
-                            Otherwise the import will fail.
+                            The headers must exists even if the columns are empty. <br />
+                            The <code> name </code> and <code> owner </code> columns must have data. The <code> notes </code> column may be empty.<br />
+                            The <code> name </code> is the account name. It has to be already added before import. <br />
+                            The <code> owner </code> is the user account logged in and under which the import is done.
                         </div>
                     </div>
 

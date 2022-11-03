@@ -79,11 +79,22 @@
         
                 <div class="row mt-4">
                     <div class="col">
-                        The csv file must have the following headers: <br /> 
+                        The csv file must have the following headers: 
                         <code> tr_date,tr_desc,tr_debit,tr_credit,tr_balance,tags </code>
-                        <br /><br />
-                        The headers should exists even if the columns are empty.
-                        Copy paste the above to the csv file if the headers are missing.
+                        <br />
+                        The headers must exists even if the columns are empty. 
+                        Copy paste the above to the csv file if the headers are missing. <br /> 
+                        The columns <code> tr_date,tr_desc </code> must have data.  <br /> 
+                        The other columns <code> tr_debit,tr_credit,tr_balance,tags </code> may be empty but they need to exists. <br />
+                        An example would looks something like this: 
+<pre><code>
+tr_date,tr_desc,tr_debit,tr_credit,tr_balance,tags
+05/09/2022,PAYMENT - THANK YOU,,500.00,37.18,
+05/10/2022,TEST TRANSACTION,,,,
+05/12/2022,MCDONALD'S #29724  Q04,3.66,,252.44,
+06/11/2022,LOBLAWS #1019,31.270,,147.450,"Grocery,Loblaws"
+</code></pre>
+                        The import is done for a specific credit card account.
                     </div>
                 </div>                   
                 
