@@ -1,7 +1,6 @@
 {% extends 'base/base_datatables.html' %}
 {% load custom_filters %}
 {% load buttons %}
-{% load custom_markdown %}
 
 
 {% block head_title %}
@@ -11,7 +10,7 @@
 
 {% block content %}
 
-<div class="page-header">
+<section class="page-header">
     <div class="row">
         <div class="col-8">            
             <div class="breadcrumbs">
@@ -28,17 +27,17 @@
             </div>            
         </div>
     </div>        
-</div>
+</section>
 
-<div class="page-heading">
+<section class="page-heading">
     <div class="row">    
         <div class="col">
             <h1> {{ object }}  </h1>
         </div>
     </div>
-</div>
+</section>
 
-<div class="page-content">
+<section class="page-content">
     <div class="row">    
         <div class="col">
 
@@ -235,12 +234,12 @@
     <div class="row mt-4">    
         <div class="col">
             <h2> Notes </h2>
-            {{ object.notes|custom_markdown }}  
+            {{ object.notes|safe }}  
         </div>
     </div>
     {% endif %}
 
-</div>
+</section>
 
 {% endblock %}
 

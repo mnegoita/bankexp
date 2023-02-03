@@ -41,7 +41,7 @@
         </div>    
     </section>
 
-    <div class="page-heading">
+    <section class="page-heading">
         <div class="row">    
             <div class="col">
                 <h1> 
@@ -53,13 +53,15 @@
                 </h1>
             </div>
         </div>
-    </div>
+    </section>
 
     {% if form.non_field_errors %}
     <div class="row mt-4">
         <div class="col">
-            <div class="card card-danger">
-                <div class="card-header"><strong>Errors</strong></div>
+            <div class="card text-white bg-danger">
+                <div class="card-header">
+                    <strong>Errors</strong>
+                </div>
                 <div class="card-body">
                     {{ form.non_field_errors }}
                 </div>
@@ -68,7 +70,7 @@
     </div>    
     {% endif %}
 
-    <div class="page-content">
+    <section class="page-content">
         <div class="row mt-4">    
             <div class="col col-md-6 offset-md-3"> 
                 <div class="card">
@@ -107,15 +109,15 @@
                     </div>
                 </div> 
             </div>
-        </div>        
-    </div>
+        </div> 
+        
+        <div class="row mt-4">
+            <div class="col col-md-6 offset-md-3">
+                <p> <span style="color:red"> &#42; </span> Required </p>
+            </div>
+        </div>
+
+    </section>
 </form>
 
-<div class="row mt-4">
-    <div class="col col-md-6 offset-md-3">
-        <p> <span style="color:red"> &#42; </span> Required </p>
-    </div>
-</div>
-
 {% endblock %}
-

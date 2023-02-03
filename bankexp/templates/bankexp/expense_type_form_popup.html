@@ -30,8 +30,10 @@
     {% if form.non_field_errors %}
     <div class="row mt-4">
         <div class="col">
-            <div class="card card-danger">
-                <div class="card-header"><strong>Errors</strong></div>
+            <div class="card text-white bg-danger">
+                <div class="card-header">
+                    <strong>Errors</strong>
+                </div>
                 <div class="card-body">
                     {{ form.non_field_errors }}
                 </div>
@@ -44,66 +46,59 @@
             <input type="hidden" name="_popup" value="1">  
     {% endif %}
 
+    <section class="page-content">
+        <div class="row mt-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body"> 
+                        <div class="form-group row">
+                            <label for="{{ form.name.id_for_label }}" class="col-sm-3 col-form-label required"> Name </label>   
+                            <div class="col-sm-9">                 
+                            {% if form.name.errors %}                
+                                {% for error in form.name.errors %}
+                                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                {% endfor %}                
+                            {% endif %}
+                            {{ form.name }} 
+                            </div>                           
+                        </div>                       
+                    </div>    
+                </div>
+            </div>
+        </div>
 
-    <div class="row mt-4">
-        <div class="col">
-            <div class="card">
-                <div class="card-body"> 
-                    <div class="form-group row">
-                        <label for="{{ form.name.id_for_label }}" class="col-sm-3 col-form-label required"> Name </label>   
-                        <div class="col-sm-9">                 
-                        {% if form.name.errors %}                
-                            {% for error in form.name.errors %}
+        <div class="row mt-4">    
+            <div class="col"> 
+                <div class="row">
+                    <div class="col">
+                        <h2> Notes </h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {% if form.notes.errors %}                
+                            {% for error in form.notes.errors %}
                                 <li class="text-danger"><strong>{{ error|escape }}</strong></li>
                             {% endfor %}                
                         {% endif %}
-                        {{ form.name }} 
-                        </div>                           
-                    </div>                       
-                </div>    
+                        {{ form.notes }} 
+                    </div>
+                </div> 
             </div>
         </div>
-    </div>
 
-    <div class="row mt-4">    
-        <div class="col"> 
-            <div class="row">
-                <div class="col">
-                    <h2> Notes </h2>
-                </div>
+        <div class="row mt-4">
+            <div class="col">
+                <p> <span style="color:red"> &#42; </span> Required </p>
             </div>
-            <div class="row">
-                <div class="col">
-                    {% if form.notes.errors %}                
-                        {% for error in form.notes.errors %}
-                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
-                        {% endfor %}                
-                    {% endif %}
-                    {{ form.notes }} 
-                </div>
-            </div> 
         </div>
-    </div>
 
-    <div class="row mt-4">
-        <div class="col">
-            <p> <span style="color:red"> &#42; </span> Required </p>
-        </div>
-    </div>
-
-    <div class="row mb-4">
-        <div class="col text-right">
-            <button class="btn btn-save" type="submit"> Save </button> 
-        </div>    
-    </div>        
-    
+        <div class="row mb-4">
+            <div class="col text-right">
+                <button class="btn btn-save" type="submit"> Save </button> 
+            </div>    
+        </div>        
+    </section>
 </form>
 
 {% endblock %}
-
- 
- 
- 
- 
- 
-

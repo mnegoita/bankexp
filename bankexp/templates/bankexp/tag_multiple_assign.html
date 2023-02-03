@@ -10,7 +10,7 @@
 
 {% block content %}
 
-<div class="page-header">
+<section class="page-header">
     <div class="row">            
         <div class="col-8">             
             <div class="breadcrumbs">
@@ -27,20 +27,20 @@
         </div>
         
     </div>        
-</div>
+</section>
 
 
 {% if chq_tr_tagged or cc_tr_tagged %}
 
-<div class="page-content">
+<section class="page-content">
 
-    <div class="page-heading">
+    <section class="page-heading">
         <div class="row mt-4">    
             <div class="col">
                 <h1> New <td><a href="{{ tag_choice.get_absolute_url }}"> {{ tag_choice }}</a></td> Tagged Transactions </h1>
             </div>
         </div>
-    </div>
+    </section>
     
         {% if chq_tr_tagged %}
         <div class="row mt-4">
@@ -73,9 +73,9 @@
                                 <td>{{ item.tr_deposits|placeholder }}</td>
                                 <td>{{ item.tr_balance }}</td>
                                 <td>
-                                {% for tag in item.tags.all %} 
-                                    {{ tag }} {% if not forloop.last %}, {% endif %} 
-                                {% endfor %}
+                                    {% for tag in item.tags.all %} 
+                                        {{ tag }} {% if not forloop.last %}, {% endif %} 
+                                    {% endfor %}
                                 </td>
                             </tr>                    
                         {% endfor %}
@@ -131,7 +131,7 @@
 
     {% else %}
 
-    <div class="page-heading">
+    <section class="page-heading">
         <div class="row mt-4">    
             <div class="col text-center">
                 <h1> Assign a Tag to Multiple Transactions  </h1>
@@ -139,7 +139,7 @@
                     in their description </p>
             </div>
         </div>
-    </div>
+    </section>
 
     <div class="row mt-4">
         <div class="col"> 
@@ -213,7 +213,7 @@
     </div>
 
     {% endif %}
-</div>
+</section>
 
 {% endblock %}
 

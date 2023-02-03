@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<div class="page-header">
+<section class="page-header">
     <div class="row">
         <div class="col-8">            
             <div class="breadcrumbs">
@@ -26,23 +26,25 @@
             </div>            
         </div>
     </div>        
-</div>
+</section>
 
-<div class="page-heading">
+<section class="page-heading">
     <div class="row mt-4">    
         <div class="col">
             <h1> {{ object }} </h1>
         </div>
     </div>
-</div>
+</section>
 
-<div class="row mt-4">
-    <div class="col col-md-6 offset-md-3 text-right"> 
-        {% add_exp_rec_from_cc_tr_button object.id %}
-    </div>
-</div> 
 
-<div class="page-content">
+<section class="page-content">
+
+    <div class="row mt-4">
+        <div class="col col-md-6 offset-md-3 text-right"> 
+            {% add_exp_rec_from_cc_tr_button object.id %}
+        </div>
+    </div> 
+
     <div class="row mt-4">    
         <div class="col col-md-6 offset-md-3">
             <table class="table table-sm"> 
@@ -90,7 +92,7 @@
             </p>
         </div>
     </div>
-</div>
+</section>
 
 {% endblock %}
 

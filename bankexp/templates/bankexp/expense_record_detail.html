@@ -1,7 +1,6 @@
 {% extends 'base/base.html' %}
 {% load custom_filters %}
 {% load buttons %}
-{% load custom_markdown %}
 
 
 {% block head_title %}
@@ -11,7 +10,7 @@
 
 {% block content %}
 
-<div class="page-header">
+<section class="page-header">
     <div class="row">
         <div class="col-8">            
             <div class="breadcrumbs">
@@ -29,17 +28,17 @@
             </div>            
         </div>
     </div>        
-</div>
+</section>
 
-<div class="page-heading">
+<section class="page-heading">
     <div class="row mt-4">    
         <div class="col">
             <h1> {{ object }} </h1>
         </div>
     </div>
-</div>
+</section>
 
-<div class="page-content">
+<section class="page-content">
     <div class="row mt-4">    
         <div class="col col-md-6 offset-md-3">           
             <table class="table table-sm card-body">
@@ -87,14 +86,13 @@
 
     {% if object.details %}
     <div class="row mt-4">    
-        <div class="col">
+        <div class="col col-md-6 offset-md-3">  
             <h2> Details </h2>
-            {{ object.details|custom_markdown }}  
+            {{ object.details|safe }}  
         </div>
     </div>
     {% endif %}
 
-</div>
+</section>
 
 {% endblock %}
-

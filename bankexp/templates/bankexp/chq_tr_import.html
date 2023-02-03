@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<div class="page-header">
+<section class="page-header">
     <div class="row">
         <div class="col-8">           
             <div class="breadcrumbs">
@@ -19,17 +19,17 @@
             </div>           
         </div>
     </div>        
-</div>
+</section>
 
-<div class="page-heading">
+<section class="page-heading">
     <div class="row">    
         <div class="col">
             <h1> Chequing Transactions Import </h1>
         </div>
     </div>
-</div>
+</section>
 
-<div class="page-content">
+<section class="page-content">
         
     {% if confirm_form %}
 
@@ -80,11 +80,21 @@
         
                 <div class="row mt-4">
                     <div class="col">
-                        The csv file must have the following headers: <br /> 
+                        The csv file must have the following headers: 
                         <code> tr_date,tr_desc,tr_withdrawal,tr_deposits,tr_balance,tags </code>
-                        <br /><br />
-                        The headers should exists even if the columns are empty.
-                        Copy paste the above to the csv file if the headers are missing.
+                        <br />
+                        The headers must exists even if the columns are empty. 
+                        Copy paste the above to the csv file if the headers are missing. <br /> 
+                        The columns <code> tr_date,tr_desc </code> must have data.  <br /> 
+                        The other columns <code> tr_withdrawal,tr_deposits,tr_balance,tags </code> may be empty but they need to exists. <br />
+                        An example would looks something like this: 
+<pre><code>
+tr_date,tr_desc,tr_withdrawal,tr_deposits,tr_balance,tags
+01/01/2020,RU254 TFR-TO C/C    ,250.00,,20524.24, Transfer to credit card
+01/13/2020,SOME TRANSACTION,,,
+01/31/2020,ACCT BAL REBATE     ,,29.95,24355.47
+</code></pre>
+                        The import is done for a specific chequing account.
                     </div>
                 </div>                   
                 
@@ -202,14 +212,6 @@
         </div>
     {% endif %}
         
-</div>
-
+</section>
 
 {% endblock %}
-
-
-
-
-
-
-

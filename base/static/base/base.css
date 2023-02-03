@@ -443,9 +443,9 @@ strong {
 }
 
 .page-content .pagination li.active, .pagination li:hover {
-        background: #66abc6;
-        border: 1px solid #0073a1;
-    }
+    background: #66abc6;
+    border: 1px solid #0073a1;
+}
 
 .page-content .pagination li.active a, .pagination li:hover a {
     color: #e5f1f5;

@@ -19,14 +19,14 @@
 
     <section class="page-header">
         <div class="row">
-            <div class="col-8">                
+            <div class="col col-md-8">                 
                 <div class="breadcrumbs">
                     <ol>
                         <li><a href="{% list_view_url object %}"> {{ object|verbose_name_plural }} </a></li>
                     </ol>
                 </div>
             </div>
-            <div class="col-4">                
+            <div class="col col-md-4">                 
                 <div class="page-buttons text-right">
                     <a href="{{ object.get_absolute_url }}" class="btn btn-cancel"> 
                         <i class="icofont-close"></i> Cancel </a>
@@ -49,7 +49,7 @@
         {% if error %}
 
             <div class="row mt-4">
-                <div class="col-6 offset-3">
+                <div class="col col-md-6 offset-md-3">
                     <div class="card mb-4">
                         <div class="card-header delete-question">
                             Error deleting {{object}} 
@@ -65,7 +65,7 @@
         {% else %}
 
             <div class="row mt-4">                                    
-                <div class="col-6 offset-3">
+                <div class="col col-md-6 offset-md-3">
                     <div class="card mb-4">
                         <div class="card-header delete-question">
                             Do you want to delete {{object}} ? 

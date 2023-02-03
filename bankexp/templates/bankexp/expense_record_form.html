@@ -41,7 +41,7 @@
         </div>    
     </section>
 
-    <div class="page-heading">
+    <section class="page-heading">
         <div class="row">    
             <div class="col">
                 <h1> 
@@ -53,13 +53,15 @@
                 </h1>
             </div>
         </div>
-    </div>
+    </section>
 
     {% if form.non_field_errors %}
     <div class="row mt-4">
         <div class="col">
-            <div class="card card-danger">
-                <div class="card-header"><strong>Errors</strong></div>
+            <div class="card text-white bg-danger">
+                <div class="card-header">
+                    <strong>Errors</strong>
+                </div>
                 <div class="card-body">
                     {{ form.non_field_errors }}
                 </div>
@@ -68,7 +70,7 @@
     </div>    
     {% endif %}
 
-    <div class="page-content">
+    <section class="page-content">
         <div class="row mt-4">    
             <div class="col">
                 <div class="row">
@@ -207,36 +209,35 @@
             </div>
         </div>
 
-    </div>
-</form>
-
-<div class="row mt-4">
-    <div class="col">
-        <p> <span style="color:red"> &#42; </span> Required </p>
-    </div>
-</div>
-
-<div class="row mt-4">
-    <div class="col">
-        <div class="card card-details">
-            <div class="card-header">
-                <strong> Expense Record Details </strong>
+        <div class="row mt-4">
+            <div class="col">
+                <div class="card card-details">
+                    <div class="card-header">
+                        <strong> Expense Record Details </strong>
+                    </div>
+                </div>
+                <div class="card-body form-textarea"> 
+                    <div class="form-row align-items-center">
+                        <div class="col">
+                            {% if form.details.errors %}                
+                                {% for error in form.details.errors %}
+                                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                {% endfor %}                
+                            {% endif %}
+                            {{ form.details }}
+                        </div>                                
+                    </div>                   
+                </div>
             </div>
         </div>
-        <div class="card-body form-textarea"> 
-            <div class="form-row align-items-center">
-                <div class="col">
-                    {% if form.details.errors %}                
-                        {% for error in form.details.errors %}
-                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
-                        {% endfor %}                
-                    {% endif %}
-                    {{ form.details }}
-                </div>                                
-            </div>                   
+
+        <div class="row mt-4">
+            <div class="col">
+                <p> <span style="color:red"> &#42; </span> Required </p>
+            </div>
         </div>
-    </div>
-</div>
+
+    </section>
+</form>
 
 {% endblock %}
-
