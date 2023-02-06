@@ -43,42 +43,42 @@
         <div class="col col-md-6 offset-md-3">           
             <table class="table table-sm card-body">
                 <tr>
-                    <td> Expense Type: </td>
+                    <td>Expense Type:</td>
                     <td>
                         <a href="{{ object.exp_type.get_absolute_url }}"> {{ object.exp_type }}</a>
                     </td>
                 </tr>
                 <tr>
-                    <td> Date: </td>
-                    <td> {{ object.exp_date }} </td>
+                    <td>Date:</td>
+                    <td>{{ object.exp_date }}</td>
                 </tr>
                 <tr>
-                    <td> Amount: </td>
-                    <td> {{ object.amount }} </td>
+                    <td>Amount:</td>
+                    <td>{{ object.amount }}</td>
                 </tr>
                 <tr>
-                    <td> Tax: </td>
-                    <td> {{ object.tax|placeholder }} </td>
+                    <td>Tax:</td>
+                    <td>{{ object.tax|placeholder }}</td>
                 </tr>
                 <tr>
-                    <td> Location: </td>
-                    <td> {{ object.location|placeholder }} </td>
+                    <td>Location:</td>
+                    <td><a href="{{ object.location.get_absolute_url }}"> {{ object.location|placeholder }}</a></td>
                 </tr>
                 <tr>
-                    <td> Checquing Tansaction: </td>
-                    <td> <a href="{{ object.chq_tr.get_absolute_url }}"> {{ object.chq_tr|placeholder }}</a> </td>
+                    <td>Checquing Tansaction:</td>
+                    <td><a href="{{ object.chq_tr.get_absolute_url }}">{{ object.chq_tr|placeholder }}</a></td>
                 </tr>
                 <tr>
-                    <td> Credit Card Tansaction: </td>
-                    <td> <a href="{{ object.cc_tr.get_absolute_url }}"> {{ object.cc_tr|placeholder }}</a> </td>
+                    <td>Credit Card Tansaction: </td>
+                    <td><a href="{{ object.cc_tr.get_absolute_url }}">{{ object.cc_tr|placeholder }}</a></td>
                 </tr>
                 <tr>
-                    <td> Quantity: </td>
-                    <td> {{ object.quantity|placeholder }} </td>
+                    <td>Quantity:</td>
+                    <td>{{ object.quantity|placeholder }}</td>
                 </tr>
                 <tr>
-                    <td> Files: </td>
-                    <td> {{ object.files|placeholder }} </td>
+                    <td>Files:</td>
+                    <td>{{ object.files|placeholder }}</td>
                 </tr>
             </table>           
         </div>
