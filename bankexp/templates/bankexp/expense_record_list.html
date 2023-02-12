@@ -43,9 +43,9 @@
                                         <th>Expense</th>
                                         <th>Date</th>
                                         <th>Amount</th>
-                                        <th>Tax</th>
                                         <th>Lecation</th>
                                         <th>Quantity</th>
+                                        <th>Transaction</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,9 +55,17 @@
                                             <td>{{ item.exp_type }}</td>
                                             <td>{{ item.exp_date }}</td>
                                             <td>{{ item.amount }}</td>
-                                            <td>{{ item.tax|placeholder }}</td>
                                             <td>{{ item.location|placeholder }}</td>
                                             <td>{{ item.quantity|placeholder }}</td>
+                                            <td>
+                                                {% if item.chq_tr %}
+                                                    {{ item.chq_tr }}
+                                                {% elif item.cc_tr %}
+                                                    {{ item.cc_tr }}
+                                                {% else %}
+                                                    <span class="text-muted">&mdash;</span>
+                                                {% endif %}
+                                            </td>
                                         </tr>                    
                                     {% endfor %}
                                 </tbody>
