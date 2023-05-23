@@ -27,16 +27,16 @@
                             </ul>
                         </li>
                     </ul>
+
+                    <div class="login-logout">
+                        <a class="btn btn-login-logout" href="{% url 'users:logout' %}?next={{ request.path }}"> Log Out </a>
+                    </div>
                     
                     <div class="search-form header-search-form">
                         <form action="{% url 'base:search' %}" method="get" role="search">
                             <input type="text" name="q" placeholder="Search">
                             <button type="submit"><i class="icofont-search"></i></button>
                         </form>
-                    </div>
-                    
-                    <div class="hello-login">
-                        <a href="{% url 'users:logout' %}?next={{ request.path }}"> Log Out </a>
                     </div>
                     
                 </nav>

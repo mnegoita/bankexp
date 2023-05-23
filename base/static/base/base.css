@@ -263,6 +263,9 @@ strong {
     background: #68A4C4; 
 }
 
+.login-logout {
+    float: right;
+}
 
 @media (min-width: 780px) {
   .nav-menu .hello-login {
@@ -735,6 +738,19 @@ label.required:after { content: '*';color:red; }
     color: #fff;
     background-color: #ff7800;
     border-color:  #ff7800;
+}
+
+.btn-login-logout {
+    color: #fff;
+    background-color: #0073a1;
+    border-color: #e5f1f5;
+    height: 40px;
+    margin-left: 5px;
+}
+.btn-login-logout:hover {
+    color: #fff;
+    background-color: #4c9dbd;
+    height: 40px;
 }
 
 /*--------------------------------------------------------------
