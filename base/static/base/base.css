@@ -203,7 +203,7 @@ strong {
     color: #1c3745; 
 }
 .nav-menu .drop-down ul a:hover, .nav-menu .drop-down ul .active > a, .nav-menu .drop-down ul li:hover > a {
-    color: #68A4C4; 
+    color: #68A4C4;
 }
 .nav-menu .drop-down > a:after {
     content: "\ea99";
@@ -263,12 +263,12 @@ strong {
     background: #68A4C4; 
 }
 
-.login-logout {
+.nav-menu .login-logout {
     float: right;
 }
 
 @media (min-width: 780px) {
-  .nav-menu .hello-login {
+  .nav-menu .login-logout {
     float:right;
   }
 
@@ -350,7 +350,7 @@ strong {
     text-align: right;
 }
 .mobile-nav-toggle i {
-    color: #fff; 
+    color: #fff;
 }
 .mobile-nav-overly {
     width: 100%;
@@ -359,7 +359,7 @@ strong {
     top: 0;
     left: 0;
     position: fixed;
-    background: rgba(30, 67, 86, 0.9);
+    background: rgba(30, 67, 86, 0.9); 
     overflow: hidden;
     display: none;
 } 
@@ -370,7 +370,11 @@ strong {
     left: 0;
 }
 .mobile-nav-active .mobile-nav-toggle i {
-    color: #fff; 
+    color: #fff;
+}
+
+.mobile-nav .login-logout {
+    margin: 10px 20px;
 }
 
 .mobile-nav .search-form {
@@ -446,9 +450,9 @@ strong {
 }
 
 .page-content .pagination li.active, .pagination li:hover {
-    background: #66abc6;
-    border: 1px solid #0073a1;
-}
+        background: #66abc6;
+        border: 1px solid #0073a1;
+    }
 
 .page-content .pagination li.active a, .pagination li:hover a {
     color: #e5f1f5;
@@ -514,7 +518,7 @@ strong {
 }
 
 /*--------------------------------------------------------------
-# Required 
+# Required  
 --------------------------------------------------------------*/
 
 label.required:after { content: '*';color:red; }
@@ -740,17 +744,30 @@ label.required:after { content: '*';color:red; }
     border-color:  #ff7800;
 }
 
-.btn-login-logout {
+.nav-menu  .login-logout .btn-login-logout {
     color: #fff;
     background-color: #0073a1;
     border-color: #e5f1f5;
     height: 40px;
     margin-left: 5px;
 }
-.btn-login-logout:hover {
+.nav-menu  .login-logout .btn-login-logout:hover {
     color: #fff;
     background-color: #4c9dbd;
     height: 40px;
+}
+
+.mobile-nav .login-logout .btn-login-logout {
+    color: #fff;
+    padding: 10px;
+    margin-right: 140px;
+    margin-bottom: 20px;
+    background-color: #0073a1;
+    border-color: #e5f1f5;
+}
+
+.mobile-nav .login-logout .btn-login-logout:hover {
+    background-color: #4c9dbd;
 }
 
 /*--------------------------------------------------------------
